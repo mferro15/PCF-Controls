@@ -13,9 +13,9 @@
     "refreshTypes": "pcf-scripts refreshTypes"
   },
   "dependencies": {
-    "@fluentui/react-components": "^9.63.0",
-    "react": "^18",
-    "react-dom": "^18",
+    "@fluentui/react-components": "^9.54.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

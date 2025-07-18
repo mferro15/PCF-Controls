@@ -7,6 +7,7 @@ export class ChoicesSelector implements ComponentFramework.ReactControl<IInputs,
     private notifyOutputChanged: () => void;
     private selectedValues: IChoicesOption[];
     private isDesignMode: boolean = false;
+    private isBuilt: boolean = false;
 
     /**
      * Empty constructor.
@@ -28,6 +29,7 @@ export class ChoicesSelector implements ComponentFramework.ReactControl<IInputs,
         state: ComponentFramework.Dictionary
     ): void {
         this.notifyOutputChanged = notifyOutputChanged;
+        
     }
 
     /**
@@ -37,23 +39,14 @@ export class ChoicesSelector implements ComponentFramework.ReactControl<IInputs,
      */
     public updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement {
         
-        const props: IChoicesSelectorProps = true? 
-        {
-                selectedValues:[{text: "Option 1", value: 1, key: "1"}, {text: "Option 2", value: 2, key: "2"}],
-                availableOptions:  [{text: "Option 1", value: 1, key: "1"}, {text: "Option 2", value: 2, key: "2"}, {text: "Option 3", value: 3, key: "3"}, {text: "Option 4", value: 4, key: "4"}],
-                isDisabled: false,
-                onChange: this.onValuesChange,
-                theme: context.fluentDesignLanguage?.tokenTheme
-        }
-        
-        : {
-                selectedValues:context.parameters.choicesAttribute.raw ? context.parameters.choicesAttribute.raw?.map((value) => {return {text: context.parameters.choicesAttribute.attributes?.Options.find(o => o.Value = value)?.Label || "", value: value, key : value.toString()}}) : [],
-                availableOptions:  context.parameters.choicesAttribute.attributes?.Options.map((option) => {return {text: option.Label, value: option.Value, key: option.Value.toString()}}) || [],
+        const props: IChoicesSelectorProps =  {
+                selectedValues:context.parameters.choicesAttribute.raw ? context.parameters.choicesAttribute.raw?.map(value => ({text: context.parameters.choicesAttribute.attributes?.Options.find(o => o.Value == value)?.Label || "", value: value, key : value.toString()})) : [],
+                availableOptions:  context.parameters.choicesAttribute.attributes?.Options.map(option =>({text: option.Label, value: option.Value, key: option.Value.toString()})) || [],
                 isDisabled: false,
                 onChange: this.onValuesChange,
                 theme: context.fluentDesignLanguage?.tokenTheme
              };
-
+       
         return React.createElement(
             ChoicesSelectorControl, props
         );

@@ -3,28 +3,31 @@ import { IChoicesOption, IChoicesSelectorProps } from "./IChoicesSelectorProps";
 import { v4 as uuidv4 } from 'uuid';
 
 import {
+
+  makeStyles,
+  IdPrefixProvider,
+  FluentProvider,
+  Input,
+} from "@fluentui/react-components";
+import { Tag } from '@fluentui/react-tags';
+import {   
+  
   TagPicker,
   TagPickerList,
   TagPickerInput,
   TagPickerControl,
   TagPickerProps,
   TagPickerOption,
-  TagPickerGroup,
-  makeStyles,
-  IdPrefixProvider,
-  FluentProvider,
-  Input,
-} from "@fluentui/react-components";
-import { Tag } from "@fluentui/react-components";
+  TagPickerGroup, } from '@fluentui/react-tag-picker';
 
 const _useStyles = makeStyles({
     root: {
         width: "100%",
-    }   
+    }
 });
 
-export const ChoicesSelectorControl : React.FC<IChoicesSelectorProps> = (props) => {
-    
+export const ChoicesSelectorControl : React.FunctionComponent<IChoicesSelectorProps> = (props) => {
+   
     const [placeholder, setPlaceholder] = React.useState<string>("---");
     const [selectedOptions, setSelectedOptions] = React.useState<IChoicesOption[]>(props.selectedValues || []);
 
@@ -74,10 +77,11 @@ export const ChoicesSelectorControl : React.FC<IChoicesSelectorProps> = (props) 
   const tagPickerOptions = props.availableOptions.filter(
     (option) => !selectedOptions.find(so => so.key == option.key)
   );
+  
   return (
      <div className={styles.root}>
           <IdPrefixProvider value={"csc_" +  uuidv4()}>
-              <FluentProvider theme={myTheme}>
+              <FluentProvider theme={myTheme} className={styles.root}>
               {props.isDisabled?
               <Input
                   value={props.selectedValues?.map((option) => option.text).join(", ") ?? placeholder}          
@@ -89,33 +93,41 @@ export const ChoicesSelectorControl : React.FC<IChoicesSelectorProps> = (props) 
             
                <TagPicker
                 onOptionSelect={onOptionSelect}
-                selectedOptions={selectedOptions.map((option) => (option.value.toString()))}
+                selectedOptions={selectedOptions.map(option => (option.key))}
                 appearance='filled-darker'
+                size="large"
               >
                 <TagPickerControl> 
                   <TagPickerGroup aria-label="Selected Options">
-                    {selectedOptions.map((option) => (
+                    {selectedOptions.map(option => (
                       <Tag
                         key={option.key}
                         shape="rounded"
                         appearance="brand"
-                        value={option.value.toString()}
+                        value={option.key}
                       >
                         {option.text}
                       </Tag>
                     ))}
                   </TagPickerGroup>  
-                  <TagPickerInput aria-label="Select Options" />               
                 </TagPickerControl>
-                <TagPickerList>
+                <TagPickerList 
+                  multiselect={true}               
+                  >
                   {
-                    tagPickerOptions.map((option) => (
+                   tagPickerOptions.length > 0 ? ( tagPickerOptions.map(option => (
                       <TagPickerOption
-                        value={option.value.toString()}
+                        value={option.key}
                         key={option.key}
-                        text={option.text}
-                      />
-                    ))
+                      >
+                        {option.text}
+                        </TagPickerOption>
+                    ))):(
+                        <TagPickerOption value="no-options">
+                          No options available
+                        </TagPickerOption>
+
+                    )
                   }
                 </TagPickerList>
               </TagPicker>
