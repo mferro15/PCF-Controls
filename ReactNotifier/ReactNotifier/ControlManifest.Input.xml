@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="MscrmTools" constructor="SimpleNotification" version="2.0.0" display-name-key="SimpleNotification" description-key="SimpleNotification_Desc" control-type="virtual"  preview-image="imgs/reactnotification.png">
+  <control namespace="mmcc" constructor="SimpleNotification" version="2.0.0" display-name-key="SimpleNotification" description-key="SimpleNotification_Desc" control-type="virtual"  preview-image="imgs/reactnotification.png">
     <external-service-usage enabled="false"/>
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
     <property name="fakeAttribute" display-name-key="fakeAttribute_Display_Key" description-key="fakeAttribute_Desc" of-type="SingleLine.Text" usage="bound" required="true" />

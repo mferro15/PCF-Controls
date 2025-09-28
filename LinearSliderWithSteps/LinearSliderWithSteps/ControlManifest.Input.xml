@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <control namespace="MscrmTools" constructor="LinearSliderWithSteps" version="0.0.17" display-name-key="LinearSliderWithSteps" description-key="LinearSliderWithSteps_description" control-type="standard" preview-image="imgs/screenshot.png">
+  <control namespace="mmcc" constructor="LinearSliderWithSteps" version="0.0.17" display-name-key="LinearSliderWithSteps" description-key="LinearSliderWithSteps_description" control-type="standard" preview-image="imgs/screenshot.png">
     <type-group name="numbers">
       <type>Whole.None</type>
       <type>Currency</type>
